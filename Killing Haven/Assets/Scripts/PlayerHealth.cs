@@ -7,6 +7,7 @@ public class PlayerHealth : MonoBehaviour
 {
     private float health;
     private float lerpTimer;
+    private float healCooldown;
     [Header("Health Bar")]
     public float maxHealth = 100f;
     public float chipSpeed = 2f;
@@ -43,6 +44,11 @@ public class PlayerHealth : MonoBehaviour
                 tempAlpha -= Time.deltaTime * fadeSpeed;
                 overlay.color = new Color(overlay.color.r, overlay.color.g, overlay.color.b, tempAlpha);
             }
+        }
+
+        if (healCooldown > 0f)
+        {
+            healCooldown -= 1 * Time.deltaTime;
         }
     }
 
@@ -82,7 +88,11 @@ public class PlayerHealth : MonoBehaviour
 
      public void RestoreHealth(float healAmount)
     {
-        health += healAmount;
-        lerpTimer = 0f;
+        if (healCooldown <= 0f)
+        {
+            health += healAmount;
+            lerpTimer = 0f;
+            healCooldown = 10f;
+        }
     }
 }
