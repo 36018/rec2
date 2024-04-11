@@ -9,7 +9,10 @@ public class StateMachine : MonoBehaviour
 
     public void Initialise()
     {
-        ChangeState(new PatrolState());
+        PatrolState state;
+        ChangeState(state = new PatrolState());
+     
+
     }
     void Start()
     {

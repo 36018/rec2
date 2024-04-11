@@ -33,12 +33,15 @@ public class PatrolState : BaseState
         {
             //waitTimer += Time.deltaTime;
             //if(waitTimer > 3)
-            if (waypointIndex < enemy.path.waypoints.Count - 1)
+           // Debug.Log("sdfghj"+ Path.availableWPS[0].transform);
+         
+            if (waypointIndex < Path.availableWPS.Count - 1)
                 waypointIndex++;
             else
                 waypointIndex = 0;
-            enemy.Agent.SetDestination(enemy.path.waypoints[waypointIndex].position);
+            enemy.Agent.SetDestination(Path.availableWPS[waypointIndex].position);
             waitTimer = 0;
+            
         }
     }
 }

@@ -8,6 +8,10 @@ public class Path : MonoBehaviour
     //public List<Transform> waypoints = new List<Transform>();
     // Start is called before the first frame update
     public List<Transform> waypoints;
+
+    public static List<Transform> availableWPS;
+
+
     [SerializeField]
     private bool alwaysDrawPath;
     [SerializeField]
@@ -16,9 +20,19 @@ public class Path : MonoBehaviour
     private bool drawNumbers;
     public Color debugColour = Color.white;
 
+
+    private void Awake()
+    {
+        availableWPS = waypoints;
+    }
+
 #if UNITY_EDITOR
     public void OnDrawGizmos()
     {
+
+        
+
+
         if (alwaysDrawPath)
         {
             DrawPath();
