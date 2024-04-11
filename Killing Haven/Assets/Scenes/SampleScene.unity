@@ -4089,7 +4089,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   useEvents: 1
-  promptMessage: 'Use Keypad '
+  promptMessage: Use E
   door: {fileID: 1769332119}
 --- !u!65 &1635354558
 BoxCollider:
