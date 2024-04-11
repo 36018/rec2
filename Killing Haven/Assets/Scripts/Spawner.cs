@@ -11,9 +11,13 @@ public class Spawner : MonoBehaviour
     [SerializeField] private float spawnAmount;
     [SerializeField] private Transform parent;
     private float spawned;
+    private int enemiesSpawned;
+    private bool hasSpawned;
 
     void Start()
     {
+        enemiesSpawned = 0;
+        hasSpawned = false;
         StartCoroutine(StartSpawnCycle());
     }
 
@@ -26,6 +30,7 @@ public class Spawner : MonoBehaviour
 
         Vector3 pos = new Vector3(transform.position.x + x, transform.position.y + y);
         GameObject newMonster = Instantiate(monster, pos, transform.rotation);
+        enemiesSpawned++;
     }
 
     IEnumerator StartSpawnCycle()
@@ -36,6 +41,20 @@ public class Spawner : MonoBehaviour
             SpawnCubert();
             yield return new WaitForSeconds(spawnDelay);
             spawned++;
+        }
+        hasSpawned = true;
+    }
+
+    public void enemyKilled()
+    {
+        enemiesSpawned--;
+    }
+
+    private void Update()
+    {
+        if(enemiesSpawned == 0 && hasSpawned == true)
+        {
+            UIManager.gameState = GameState.Victory;
         }
     }
 }

@@ -25,13 +25,19 @@ public class Manager : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        //tell the playermotor to move using the value from our movement action.
-        Motor.ProcessMove(OnFoot.Movement.ReadValue<Vector2>());
+        if (UIManager.gameState == GameState.Play)
+        {
+            //tell the playermotor to move using the value from our movement action.
+            Motor.ProcessMove(OnFoot.Movement.ReadValue<Vector2>());
+        }
     }
 
     private void LateUpdate()
     {
-        look.ProcessLook(OnFoot.Look.ReadValue<Vector2>());
+        if (UIManager.gameState == GameState.Play)
+        {
+            look.ProcessLook(OnFoot.Look.ReadValue<Vector2>());
+        }
     }
     private void OnEnable() 
     {

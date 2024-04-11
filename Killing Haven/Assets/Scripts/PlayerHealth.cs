@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : MonoBehaviour, Health
 {
     private float health;
     private float lerpTimer;
@@ -84,9 +84,13 @@ public class PlayerHealth : MonoBehaviour
         lerpTimer = 0f;
         durationTimer = 0;
         overlay.color = new Color(overlay.color.r, overlay.color.g, overlay.color.b, 1);
+        if(health <= 0f)
+        {
+            GameOver();
+        }
     }
 
-     public void RestoreHealth(float healAmount)
+    public void RestoreHealth(float healAmount)
     {
         if (healCooldown <= 0f)
         {
@@ -94,5 +98,10 @@ public class PlayerHealth : MonoBehaviour
             lerpTimer = 0f;
             healCooldown = 10f;
         }
+    }
+
+    private void GameOver()
+    {
+        UIManager.gameState = GameState.GameOver;
     }
 }
