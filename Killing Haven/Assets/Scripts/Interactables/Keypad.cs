@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Keypad : Interactable
+public class Keypad : Interactable, GameReset
 {
     [SerializeField]
     private GameObject door;
