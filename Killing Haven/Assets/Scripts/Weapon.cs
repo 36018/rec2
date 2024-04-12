@@ -4,10 +4,17 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    private AudioSource m_AudioSource;
+
     public GameObject bulletPrefab;
     public Transform bulletSpawn;
     public float bulletVelocity = 30;
     public float bulletPrefabLifeTime = 3f;
+
+    private void Start()
+    {
+        m_AudioSource = GetComponent<AudioSource>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -16,6 +23,7 @@ public class Weapon : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Mouse0))
         {
             FireWeapon();
+            m_AudioSource.Play();
         }
     }
 
