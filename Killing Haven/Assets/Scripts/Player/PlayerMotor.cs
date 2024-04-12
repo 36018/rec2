@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMotor : MonoBehaviour
+public class PlayerMotor : MonoBehaviour, GameReset
 {
+    [SerializeField] private Transform player;
+    private Vector3 startPos;
     private CharacterController controller;
     private Vector3 playerVelocity;
     private bool isGrounded;
@@ -14,6 +16,8 @@ public class PlayerMotor : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        startPos = transform.position;
+        Debug.Log(startPos);
     }
 
     // Update is called once per frame
@@ -54,5 +58,14 @@ public class PlayerMotor : MonoBehaviour
         {
             playerVelocity.y = Mathf.Sqrt(jumpHeight * -3.0f * gravity);
         }
+    }
+
+    public void ResetGame()
+    {
+        controller.enabled = false;
+        Physics.SyncTransforms();
+        Debug.Log(startPos);
+        player.position = Vector3.zero;
+        controller.enabled = true;
     }
 }

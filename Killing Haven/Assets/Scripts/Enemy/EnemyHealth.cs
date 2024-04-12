@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyHealth : MonoBehaviour, Health
+public class EnemyHealth : MonoBehaviour, Health, GameReset
 {
     private float health;
     public float maxEnemyHealth = 100f;
@@ -23,7 +23,13 @@ public class EnemyHealth : MonoBehaviour, Health
         health -= damage;
         if (health <= 0)
         {
+            Spawner.EnemyKilled();
             Destroy(gameObject);
         }
+    }
+
+    public void ResetGame()
+    {
+        Destroy(gameObject);
     }
 }

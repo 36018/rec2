@@ -2,23 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spawner : MonoBehaviour
+public class Spawner : MonoBehaviour, GameReset
 {
     [SerializeField] private GameObject monster;
     [SerializeField] private Vector2 offset;
     [SerializeField] private Transform target;
     [SerializeField] private float spawnDelay;
-    [SerializeField] private float spawnAmount;
+    [SerializeField] public float spawnAmount;
     [SerializeField] private Transform parent;
     private float spawned;
-    private int enemiesSpawned;
+    private static int enemiesKilled;
     private bool hasSpawned;
 
     void Start()
     {
-        enemiesSpawned = 0;
-        hasSpawned = false;
-        StartCoroutine(StartSpawnCycle());
+        Restart();
     }
 
     void SpawnCubert() { 
@@ -30,7 +28,8 @@ public class Spawner : MonoBehaviour
 
         Vector3 pos = new Vector3(transform.position.x + x, transform.position.y + y);
         GameObject newMonster = Instantiate(monster, pos, transform.rotation);
-        enemiesSpawned++;
+
+        hasSpawned = true;
     }
 
     IEnumerator StartSpawnCycle()
@@ -42,19 +41,32 @@ public class Spawner : MonoBehaviour
             yield return new WaitForSeconds(spawnDelay);
             spawned++;
         }
-        hasSpawned = true;
     }
 
-    public void enemyKilled()
+    public static void EnemyKilled()
     {
-        enemiesSpawned--;
+        enemiesKilled++;
+        Debug.Log(enemiesKilled);
     }
 
     private void Update()
     {
-        if(enemiesSpawned == 0 && hasSpawned == true)
+        if(enemiesKilled == spawnAmount + 1 && hasSpawned == true)
         {
             UIManager.gameState = GameState.Victory;
         }
+    }
+
+    public void ResetGame()
+    {
+        enemiesKilled = 0;
+        hasSpawned = false;
+    }
+
+    public void Restart()
+    {
+        enemiesKilled = 0;
+        hasSpawned = false;
+        StartCoroutine(StartSpawnCycle());
     }
 }

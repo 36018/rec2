@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerHealth : MonoBehaviour, Health
+public class PlayerHealth : MonoBehaviour, Health, GameReset
 {
-    private float health;
+    [SerializeField] private HealthUI healthUI;
+    public static float health;
     private float lerpTimer;
     private float healCooldown;
     [Header("Health Bar")]
@@ -88,6 +89,7 @@ public class PlayerHealth : MonoBehaviour, Health
         {
             GameOver();
         }
+        healthUI.UpdateHealth(health);
     }
 
     public void RestoreHealth(float healAmount)
@@ -97,11 +99,24 @@ public class PlayerHealth : MonoBehaviour, Health
             health += healAmount;
             lerpTimer = 0f;
             healCooldown = 10f;
+            if(health > maxHealth)
+            {
+                health = maxHealth;
+            }
         }
+        healthUI.UpdateHealth(health);
     }
 
     private void GameOver()
     {
         UIManager.gameState = GameState.GameOver;
+    }
+
+    public void ResetGame()
+    {
+        health = maxHealth;
+        healCooldown = 0f;
+        UpdateHealthUI();
+        healthUI.UpdateHealth(health);
     }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIManager : MonoBehaviour
+public class UIManager : MonoBehaviour, GameReset
 {
     public static GameState gameState = GameState.Play;
     [SerializeField] private GameObject pauseScreen;
@@ -80,6 +80,14 @@ public class UIManager : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.None;
         }
+    }
+
+    public void ResetGame()
+    {
+        gameState = GameState.Play;
+        Reset();
+        playScreen.SetActive(true);
+        LockMouse(true);
     }
 }
 
